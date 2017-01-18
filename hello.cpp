@@ -1,9 +1,8 @@
 class foo {
-    private:
         String myPrivateString;
     public:
         String myPublicString;
-        void foo() {
+        void foo_func() {
             std::cout << "foo" << std::endl;
         }
 }

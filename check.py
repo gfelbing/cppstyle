@@ -43,8 +43,15 @@ def checkNaming(node,config):
                 "Variable '{}' does not match '{}'".format(name, regex)
             ))
     elif node.kind == ci.CursorKind.FIELD_DECL:
-        regex = config["naming"]["members"]
         name = node.spelling
+        regex = ""
+        if node.access_specifier == ci.AccessSpecifier.PRIVATE:
+            regex = config["naming"]["members"]["private"]
+        elif node.access_specifier == ci.AccessSpecifier.PROTECTED:
+            regex = config["naming"]["members"]["protected"]
+        elif node.access_specifier == ci.AccessSpecifier.PUBLIC:
+            regex = config["naming"]["members"]["public"]
+
         if re.match(regex, name) == None:
             errors.append(Issue(
                 node.location.line, node.location.column,
@@ -59,6 +66,7 @@ def checkNaming(node,config):
                 "Function '{}' does not match '{}'".format(name, regex)
             ))
 
+    access = None
     for c in node.get_children():
         errors += checkNaming(c,config)
 
