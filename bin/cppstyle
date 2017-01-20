@@ -1,0 +1,25 @@
+#!/usr/bin/env python
+
+import sys, errno
+from cppstyle import check_naming, utils
+
+def runChecks(file,config):
+    import clang.cindex as ci
+    index = ci.Index.create()
+    source = index.parse(file)
+    root = source.cursor
+    issues = []
+    issues += check_naming(root, config)
+    return issues
+
+
+args = args()
+config = config(args.config)
+
+for file in args.files:
+    issues = runChecks(file,config)
+    if len(issues) > 0:
+        print("Found issues in file '{}':".format(file))
+        for issue in issues:
+            print("    {}".format(issue))
+        sys.exit(errno.EFAULT)
