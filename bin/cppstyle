@@ -9,17 +9,17 @@ def runChecks(file,config):
     source = index.parse(file)
     root = source.cursor
     issues = []
-    issues += check_naming(root, config)
+    issues += check_naming.check(root, config)
     return issues
 
+if __name__ == "__main__":
+    args = utils.args()
+    config = utils.config(args.config)
 
-args = args()
-config = config(args.config)
-
-for file in args.files:
-    issues = runChecks(file,config)
-    if len(issues) > 0:
-        print("Found issues in file '{}':".format(file))
-        for issue in issues:
-            print("    {}".format(issue))
-        sys.exit(errno.EFAULT)
+    for file in args.files:
+        issues = runChecks(file,config)
+        if len(issues) > 0:
+            print("Found issues in file '{}':".format(file))
+            for issue in issues:
+                print("    {}".format(issue))
+            sys.exit(errno.EFAULT)

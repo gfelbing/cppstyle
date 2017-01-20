@@ -6,3 +6,4 @@ naming:
         protected: ^([a-z0-9]+)(_[a-z0-9]+)*_$
         public: ^([a-z0-9]+)(_[a-z0-9]+)*$
     functions: ^([a-z0-9]+)([A-Z][a-z0-9]*)*$
+    methods: ^([a-z0-9]+)([A-Z][a-z0-9]*)*$
