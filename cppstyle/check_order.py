@@ -1,10 +1,8 @@
 from .issue import *
 from .utils import safe_get
-import clang.cindex as ci
-from itertools import dropwhile
-
 
 def access_spec_2_string(spec):
+    import clang.cindex as ci
     if spec == ci.AccessSpecifier.PUBLIC:
         return "public"
     elif spec == ci.AccessSpecifier.PROTECTED:
@@ -13,10 +11,11 @@ def access_spec_2_string(spec):
         return "private"
 
 def check(node, config):
+    import clang.cindex as ci
     import re
     errors = []
     if node.kind == ci.CursorKind.CLASS_DECL:
-        if safe_get(config, ["order", "access_specifier_required"]) == "True":
+        if safe_get(config, ["order", "access_specifier_required"]) == True:
             if list(node.get_children())[0].kind != ci.CursorKind.CXX_ACCESS_SPEC_DECL:
                 errors.append(Issue(
                     node.location.line, node.location.column,

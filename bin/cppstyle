@@ -1,23 +1,17 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3.5
 
 import sys, errno
-from cppstyle import check_naming, utils
-
-def runChecks(file,config):
-    import clang.cindex as ci
-    index = ci.Index.create()
-    source = index.parse(file)
-    root = source.cursor
-    issues = []
-    issues += check_naming.check(root, config)
-    return issues
+from cppstyle import check_naming, check_order, utils
 
 if __name__ == "__main__":
     args = utils.args()
     config = utils.config(args.config)
 
     for file in args.files:
-        issues = runChecks(file,config)
+        source = utils.parseFile(file)
+        issues = []
+        issues += check_naming.check(source, config)
+        issues += check_order.check(source, config)
         if len(issues) > 0:
             print("Found issues in file '{}':".format(file))
             for issue in issues:

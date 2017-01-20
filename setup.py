@@ -11,5 +11,5 @@ setup(
     packages=["cppstyle"],
     scripts=['bin/cppstyle'],
     zip_safe=False,
-    #install_requires=['argparse', 'yaml', 'clang']
+    install_requires=['argparse', 'pyyaml']
 )

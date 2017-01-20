@@ -12,7 +12,7 @@ class TestNaming(unittest.TestCase):
     def test_force_access_specifier(self):
         # given
         root = self.parse_source()
-        config = { 'order': {'access_specifier_required': "True" }}
+        config = { 'order': {'access_specifier_required': True }}
         # when
         result = check_order.check(root,config)
         # then

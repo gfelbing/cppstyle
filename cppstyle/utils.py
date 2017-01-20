@@ -23,3 +23,9 @@ def safe_get(dict, keys):
     for key in keys:
         result = result.get(key,{})
     return result
+
+def parseFile(file):
+    import clang.cindex as ci
+    index = ci.Index.create()
+    source = index.parse(file)
+    return source.cursor

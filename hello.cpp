@@ -12,3 +12,11 @@ int main()
   int wrongName = 1;
   return wrongName;
 }
+
+class Foo {
+    string foo;
+    private:
+        string bar;
+    public:
+        int baz;
+}
