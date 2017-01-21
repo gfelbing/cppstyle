@@ -10,8 +10,8 @@ if __name__ == "__main__":
     for file in args.files:
         source = utils.parseFile(file)
         issues = []
-        issues += check_naming.check(source, config)
-        issues += check_order.check(source, config)
+        issues += check_naming.check(file, source, config)
+        issues += check_order.check(file, source, config)
         if len(issues) > 0:
             print("Found issues in file '{}':".format(file))
             for issue in issues:

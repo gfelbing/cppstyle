@@ -10,16 +10,16 @@ def access_spec_2_string(spec):
     elif spec == ci.AccessSpecifier.PRIVATE:
         return "private"
 
-def check(node, config):
+def check(file, node, config):
     import clang.cindex as ci
-    import re
     errors = []
-    if node.kind == ci.CursorKind.CLASS_DECL:
+    if file == str(node.location.file) and node.kind == ci.CursorKind.CLASS_DECL:
         if safe_get(config, ["order", "access_specifier_required"]) == True:
-            if list(node.get_children())[0].kind != ci.CursorKind.CXX_ACCESS_SPEC_DECL:
+            children = list(node.get_children())
+            if len(children) > 0 and children[0].kind != ci.CursorKind.CXX_ACCESS_SPEC_DECL:
                 errors.append(Issue(
                     node.location.line, node.location.column,
-                    "Class '{}' should have an access specifier at first.".format(node.spelling)
+                    "Class '{}' should have an access specifier at first. '{}'".format(node.spelling,node.location)
                 ))
 
         specifier_order = safe_get(config, ["order", "access_specifier"])
@@ -47,6 +47,6 @@ def check(node, config):
 
 
     for c in node.get_children():
-        errors += check(c, config)
+        errors += check(file, c, config)
 
     return errors
