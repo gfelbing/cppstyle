@@ -1,32 +1,27 @@
-from .issue import *
+from cppstyle.model.access_specifier import AccessSpecifier
+from cppstyle.model.class_node import Class
+from cppstyle.model.issue import *
 from .utils import safe_get
 
-def access_spec_2_string(spec):
-    import clang.cindex as ci
-    if spec == ci.AccessSpecifier.PUBLIC:
-        return "public"
-    elif spec == ci.AccessSpecifier.PROTECTED:
-        return "protected"
-    elif spec == ci.AccessSpecifier.PRIVATE:
-        return "private"
 
 def check(file, node, config):
-    import clang.cindex as ci
     errors = []
-    if file == str(node.location.file) and node.kind == ci.CursorKind.CLASS_DECL:
+    if file == node.file and isinstance(node, Class):
         if safe_get(config, ["order", "access_specifier_required"]) == True:
-            children = list(node.get_children())
-            if len(children) > 0 and children[0].kind != ci.CursorKind.CXX_ACCESS_SPEC_DECL:
+            if len(node.children) > 0 and not isinstance(node.children[0], AccessSpecifier):
                 errors.append(Issue(
-                    node.location.line, node.location.column,
-                    "Class '{}' should have an access specifier at first. '{}'".format(node.spelling,node.location)
+                    node.position,
+                    "Class '{}' should have an access specifier at first.".format(node.name)
                 ))
 
         specifier_order = safe_get(config, ["order", "access_specifier"])
         if specifier_order:
             specifiers = list(map(
-                lambda c: access_spec_2_string(c.access_specifier),
-                filter(lambda c: c.kind == ci.CursorKind.CXX_ACCESS_SPEC_DECL, list(node.get_children()))
+                lambda c: c.access.value,
+                filter(
+                    lambda c: isinstance(c, AccessSpecifier),
+                    node.children
+                )
             ))
             specifier_order = list(filter(
                 lambda e: e in specifiers,
@@ -34,19 +29,15 @@ def check(file, node, config):
             ))
             if specifiers != specifier_order:
                 errors.append(Issue(
-                    node.location.line, node.location.column,
+                    node.position,
                     "Class '{}' has wrong access specifier order: {}, should be {}".format(
-                        node.spelling,
+                        node.name,
                         specifiers,
                         specifier_order
                     )
                 ))
 
-
-
-
-
-    for c in node.get_children():
+    for c in node.children:
         errors += check(file, c, config)
 
     return errors
