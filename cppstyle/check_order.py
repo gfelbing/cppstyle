@@ -4,9 +4,9 @@ from cppstyle.model.issue import *
 from .utils import safe_get
 
 
-def check(file, node, config):
+def check(node, config):
     errors = []
-    if file == node.file and isinstance(node, Class):
+    if isinstance(node, Class):
         if safe_get(config, ["order", "access_specifier_required"]) == True:
             if len(node.children) > 0 and not isinstance(node.children[0], AccessSpecifier):
                 errors.append(Issue(
@@ -36,8 +36,5 @@ def check(file, node, config):
                         specifier_order
                     )
                 ))
-
-    for c in node.children:
-        errors += check(file, c, config)
 
     return errors

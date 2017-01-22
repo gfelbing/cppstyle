@@ -1,5 +1,5 @@
 import unittest
-from cppstyle import check_order
+from cppstyle import check
 from cppstyle.model import parser
 
 
@@ -13,7 +13,7 @@ class TestNaming(unittest.TestCase):
         root = self.source
         config = {'order': {'access_specifier_required': True}}
         # when
-        result = check_order.check(self.file, root, config)
+        result = check.check(self.file, root, config)
         # then
         expected = "[Line 5, Col 15]: Class 'Bar' should have an access specifier at first."
         self.assertEqual(len(result), 1)
@@ -24,7 +24,7 @@ class TestNaming(unittest.TestCase):
         root = self.source
         config = {'order': {'access_specifier': ['public', 'protected', 'private']}}
         # when
-        result = check_order.check(self.file, root, config)
+        result = check.check(self.file, root, config)
         # then
         expected = "[Line 1, Col 7]: Class 'Foo' has wrong access specifier order: ['protected', 'public', 'private'], should be ['public', 'protected', 'private']"
         self.assertEqual(len(result), 1)
