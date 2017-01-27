@@ -5,4 +5,3 @@ RUN apt-get update && \
 ADD . /tmp/cppstyle
 RUN pip install /tmp/cppstyle && \
     rm -rf /tmp/*
-CMD ["cppstyle"]

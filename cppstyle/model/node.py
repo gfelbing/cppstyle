@@ -1,4 +1,4 @@
-class Node:
+class Node(object):
     def __init__(self, file, position, access, children):
         self.file = file
         self.position = position
