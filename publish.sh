@@ -6,6 +6,7 @@ set -x
 BASEPATH=$(realpath "$(dirname $0)")
 VERSION=$(cat "$BASEPATH/VERSION.txt")
 DOCKERIMAGE="gfelbing/cppstyle"
+GIT_TAG="v$VERSION"
 
 # Upload to pypi
 python setup.py sdist upload
@@ -16,6 +17,7 @@ docker build -t "$DOCKERIMAGE:$VERSION" "$BASEPATH"
 docker push "$DOCKERIMAGE:$VERSION"
 
 # git tag version
-git tag "v$VERSION"
+git tag "$GIT_TAG"
 # git push
-git push --tags
+git push
+git push origin "$GIT_TAG"
