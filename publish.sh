@@ -18,4 +18,4 @@ docker push "$DOCKERIMAGE:$VERSION"
 # git tag version
 git tag "v$VERSION"
 # git push
-git push
+git push --tags
