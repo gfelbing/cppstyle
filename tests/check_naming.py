@@ -1,6 +1,8 @@
 import unittest
+
 from cppstyle import check
 from cppstyle.model import parser
+
 
 class TestNaming(unittest.TestCase):
     def setUp(self):
@@ -13,7 +15,7 @@ class TestNaming(unittest.TestCase):
         # when
         result = check.check(self.file, self.source, config)
         # then
-        asserted = "[Line 1, Col 7]: Class 'foo' does not match '^([A-Z][a-z0-9]*)+$'"
+        asserted = "[Line 1, Col 0]: Class 'foo' does not match '^([A-Z][a-z0-9]*)+$'"
         self.assertEqual(len(result), 1)
         self.assertEqual(str(result[0]), asserted)
 
@@ -23,7 +25,7 @@ class TestNaming(unittest.TestCase):
         # when
         result = check.check(self.file, self.source, config)
         # then
-        asserted = "[Line 15, Col 7]: Variable 'wrongName' does not match '^([a-z0-9]+)(_[a-z0-9]+)*$'"
+        asserted = "[Line 15, Col 2]: Variable 'wrongName' does not match '^([a-z0-9]+)(_[a-z0-9]+)*$'"
         self.assertEqual(len(result), 1)
         self.assertEqual(str(result[0]), asserted)
 
@@ -33,7 +35,7 @@ class TestNaming(unittest.TestCase):
         # when
         result = check.check(self.file, self.source, config)
         # then
-        asserted = "[Line 3, Col 16]: Field 'myPrivateString' does not match '^([a-z0-9]+)(_[a-z0-9]+)*_$'"
+        asserted = "[Line 3, Col 8]: Field 'myPrivateString' does not match '^([a-z0-9]+)(_[a-z0-9]+)*_$'"
         self.assertEqual(len(result), 1)
         self.assertEqual(str(result[0]), asserted)
 
@@ -43,7 +45,7 @@ class TestNaming(unittest.TestCase):
         # when
         result = check.check(self.file, self.source, config)
         # then
-        asserted = "[Line 5, Col 16]: Field 'myProtectedString' does not match '^([a-z0-9]+)(_[a-z0-9]+)*_$'"
+        asserted = "[Line 5, Col 8]: Field 'myProtectedString' does not match '^([a-z0-9]+)(_[a-z0-9]+)*_$'"
         self.assertEqual(len(result), 1)
         self.assertEqual(str(result[0]), asserted)
 
@@ -53,7 +55,7 @@ class TestNaming(unittest.TestCase):
         # when
         result = check.check(self.file, self.source, config)
         # then
-        asserted = "[Line 7, Col 16]: Field 'myPublicString' does not match '^([a-z0-9]+)(_[a-z0-9]+)*$'"
+        asserted = "[Line 7, Col 8]: Field 'myPublicString' does not match '^([a-z0-9]+)(_[a-z0-9]+)*$'"
         self.assertEqual(len(result), 1)
         self.assertEqual(str(result[0]), asserted)
 
@@ -63,7 +65,7 @@ class TestNaming(unittest.TestCase):
         # when
         result = check.check(self.file, self.source, config)
         # then
-        asserted = "[Line 8, Col 14]: Method 'foo_method' does not match '^([a-z0-9]+)([A-Z][a-z0-9]*)*$'"
+        asserted = "[Line 8, Col 8]: Method 'foo_method' does not match '^([a-z0-9]+)([A-Z][a-z0-9]*)*$'"
         self.assertEqual(len(result), 1)
         self.assertEqual(str(result[0]), asserted)
 
@@ -73,7 +75,7 @@ class TestNaming(unittest.TestCase):
         # when
         result = check.check(self.file, self.source, config)
         # then
-        asserted = "[Line 19, Col 6]: Function 'foo_function' does not match '^([a-z0-9]+)([A-Z][a-z0-9]*)*$'"
+        asserted = "[Line 19, Col 0]: Function 'foo_function' does not match '^([a-z0-9]+)([A-Z][a-z0-9]*)*$'"
         self.assertEqual(len(result), 1)
         self.assertEqual(str(result[0]), asserted)
 

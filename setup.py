@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="cppstyle",
-    version="0.0.3",
+    version="0.1.0",
     description="Checks C/C++ code along an clang AST.",
     url="http://github.com/gfelbing/cppstyle",
     author="Georg Felbinger",

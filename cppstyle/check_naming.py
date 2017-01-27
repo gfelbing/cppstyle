@@ -1,11 +1,11 @@
-from cppstyle.model.issue import *
-from .utils import safe_get
-from cppstyle.model.variable import *
-from cppstyle.model.function import *
-from cppstyle.model.class_node import *
-from cppstyle.model.method import *
-from cppstyle.model.field import *
 from cppstyle.model.access import *
+from cppstyle.model.class_node import *
+from cppstyle.model.field import *
+from cppstyle.model.function import *
+from cppstyle.model.issue import *
+from cppstyle.model.method import *
+from cppstyle.model.variable import *
+from .utils import safe_get
 
 
 def check(node, config):
@@ -59,6 +59,5 @@ def check(node, config):
                     node.position,
                     "Field '{}' does not match '{}'".format(name, regex)
                 ))
-
 
     return errors

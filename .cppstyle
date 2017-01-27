@@ -13,3 +13,10 @@ order:
         - "public"
         - "protected"
         - "private"
+indent:
+    function: 2
+    method: 2
+    struct: 2
+    class:
+        access_modifier: 0
+        default: 2

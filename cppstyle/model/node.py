@@ -1,6 +1,3 @@
-from .position import Position
-
-
 class Node:
     def __init__(self, file, position, access, children):
         self.file = file

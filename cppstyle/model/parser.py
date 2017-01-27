@@ -1,13 +1,17 @@
 import clang.cindex as ci
-from .position import Position
+
 from .access import Access
-from .node import Node
-from .class_node import Class
 from .access_specifier import AccessSpecifier
-from .variable import Variable
-from .method import Method
-from .function import Function
+from .class_node import Class
 from .field import Field
+from .function import Function
+from .method import Method
+from .node import Node
+from .position import Position
+from .scope import Scope
+from .struct import Struct
+from .variable import Variable
+
 
 def parse(file):
     index = ci.Index.create()
@@ -34,13 +38,17 @@ def to_node(clang_node):
         return Method(file, position, access, clang_node.spelling, children)
     elif kind == ci.CursorKind.FIELD_DECL:
         return Field(file, position, access, clang_node.spelling, children)
+    elif kind == ci.CursorKind.COMPOUND_STMT:
+        return Scope(file, position, access, clang_node.spelling, children)
+    elif kind == ci.CursorKind.STRUCT_DECL:
+        return Struct(file, position, access, clang_node.spelling, children)
     else:
         return Node(file, position, access, children)
 
 
 def get_location(clang_node):
     if hasattr(clang_node, 'location'):
-        return Position(clang_node.location.line, clang_node.location.column)
+        return Position(clang_node.extent.start.line, clang_node.extent.start.column - 1)
     else:
         return Position(0, 0)
 
