@@ -50,4 +50,4 @@ class TestIndent(unittest.TestCase):
             "[Line 8, Col 4]: Indent is wrong, should be '2', not '4'"
         ]
         self.assertEqual(len(result), 2)
-        self.assertEqual(asserted,[str(r) for r in result])
+        self.assertEqual(asserted, [str(r) for r in result])

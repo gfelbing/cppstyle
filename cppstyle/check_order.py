@@ -1,6 +1,4 @@
-from cppstyle.model.access_specifier import AccessSpecifier
-from cppstyle.model.class_node import Class
-from cppstyle.model.issue import *
+from cppstyle.model import AccessSpecifier, Class, Issue
 from .utils import safe_get
 
 

@@ -1,10 +1,4 @@
-from cppstyle.model.access_specifier import AccessSpecifier
-from cppstyle.model.class_node import Class
-from cppstyle.model.function import Function
-from cppstyle.model.issue import Issue
-from cppstyle.model.method import Method
-from cppstyle.model.scope import Scope
-from cppstyle.model.struct import Struct
+from cppstyle.model import AccessSpecifier, Class, Function, Issue, Method, Scope, Struct
 from cppstyle.utils import safe_get
 
 

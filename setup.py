@@ -11,7 +11,7 @@ with open("VERSION.txt") as versionfile:
         author="Georg Felbinger",
         author_email="gfelbing@github.com",
         license="GPLv3",
-        packages=["cppstyle","cppstyle.model"],
+        packages=["cppstyle", "cppstyle.model"],
         scripts=['bin/cppstyle'],
         zip_safe=False,
         install_requires=['argparse', 'pyyaml', 'enum']

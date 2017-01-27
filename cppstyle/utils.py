@@ -25,3 +25,22 @@ def safe_get(dict, keys):
     for key in keys:
         result = result.get(key, {})
     return result
+
+
+def split(list, split_predicate, append_predicate=lambda x: True):
+    result = []
+    current = []
+    for e in list:
+        if split_predicate(e):
+            if len(current) > 0:
+                result.append(current)
+            if append_predicate(e):
+                current = [e]
+            else:
+                current = []
+        else:
+            if append_predicate(e):
+                current.append(e)
+    if len(current) > 0:
+        result.append(current)
+    return result

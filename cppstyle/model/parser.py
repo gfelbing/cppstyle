@@ -1,16 +1,9 @@
+import re
+
 import clang.cindex as ci
 
-from .access import Access
-from .access_specifier import AccessSpecifier
-from .class_node import Class
-from .field import Field
-from .function import Function
-from .method import Method
-from .node import Node
-from .position import Position
-from .scope import Scope
-from .struct import Struct
-from .variable import Variable
+from cppstyle import utils
+from cppstyle.model import *
 
 
 def parse(file):
@@ -25,25 +18,26 @@ def to_node(clang_node):
     access = get_access(clang_node)
     children = get_children(clang_node)
     kind = get_kind(clang_node)
+    comments = get_comments(clang_node)
 
     if kind == ci.CursorKind.CLASS_DECL:
-        return Class(file, position, access, clang_node.spelling, children)
+        return Class(file, position, access, comments, clang_node.spelling, children)
     elif kind == ci.CursorKind.CXX_ACCESS_SPEC_DECL:
-        return AccessSpecifier(file, position, access, children)
+        return AccessSpecifier(file, position, access, comments, children)
     elif kind == ci.CursorKind.VAR_DECL:
-        return Variable(file, position, access, clang_node.spelling, children)
+        return Variable(file, position, access, comments, clang_node.spelling, children)
     elif kind == ci.CursorKind.FUNCTION_DECL:
-        return Function(file, position, access, clang_node.spelling, children)
+        return Function(file, position, access, comments, clang_node.spelling, children)
     elif kind == ci.CursorKind.CXX_METHOD:
-        return Method(file, position, access, clang_node.spelling, children)
+        return Method(file, position, access, comments, clang_node.spelling, children)
     elif kind == ci.CursorKind.FIELD_DECL:
-        return Field(file, position, access, clang_node.spelling, children)
+        return Field(file, position, access, comments, clang_node.spelling, children)
     elif kind == ci.CursorKind.COMPOUND_STMT:
-        return Scope(file, position, access, clang_node.spelling, children)
+        return Scope(file, position, access, comments, children)
     elif kind == ci.CursorKind.STRUCT_DECL:
-        return Struct(file, position, access, clang_node.spelling, children)
+        return Struct(file, position, access, comments, clang_node.spelling, children)
     else:
-        return Node(file, position, access, children)
+        return Node(file, position, access, comments, children)
 
 
 def get_location(clang_node):
@@ -79,3 +73,28 @@ def get_kind(clang_node):
         return clang_node.kind
     else:
         return {}
+
+
+def get_comments(clang_node):
+    if clang_node.raw_comment:
+        lines = clang_node.raw_comment.splitlines()
+        stripped = map(lambda line: re.match("(?:[/*\s]*)(.*)", line).group(1), lines)
+        splitted = utils.split(
+            stripped,
+            lambda l: not l or len(l) == 0 or l.startswith("@"),
+            lambda l: l and len(l) > 0
+        )
+        return list(map(to_comment, splitted))
+    else:
+        return []
+
+
+def to_comment(comment_lines):
+    type = "default"
+    firstline, *remaining = list(comment_lines)
+    if firstline.startswith("@"):
+        matcher = re.match("(@\w+)(?:\w*)(.*)", comment_lines[0])
+        type = matcher.group(1)
+        firstline = matcher.group(2)
+    content = "\n".join([firstline] + remaining)
+    return Comment(type, content)

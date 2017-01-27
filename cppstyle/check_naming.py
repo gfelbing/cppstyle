@@ -1,10 +1,4 @@
-from cppstyle.model.access import *
-from cppstyle.model.class_node import *
-from cppstyle.model.field import *
-from cppstyle.model.function import *
-from cppstyle.model.issue import *
-from cppstyle.model.method import *
-from cppstyle.model.variable import *
+from cppstyle.model import Access, Class, Field, Function, Issue, Method, Variable
 from .utils import safe_get
 
 

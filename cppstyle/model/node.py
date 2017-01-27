@@ -1,8 +1,9 @@
 class Node(object):
-    def __init__(self, file, position, access, children):
+    def __init__(self, file, position, access, comments, children):
         self.file = file
         self.position = position
         self.access = access
+        self.comments = comments
         self.children = children
 
     def __str__(self):
