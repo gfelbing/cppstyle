@@ -1,23 +1,31 @@
 #!/bin/sh
 
 set -e
-set -x
 
 BASEPATH=$(realpath "$(dirname $0)")
 VERSION=$(cat "$BASEPATH/VERSION.txt")
 DOCKERIMAGE="gfelbing/cppstyle"
 GIT_TAG="v$VERSION"
 
-# Upload to pypi
+echo -n "Running unit tests..."
+python -m unittest tests
+echo "done."
+
+echo -n "Uploading to pypi..."
 python setup.py sdist upload
+echo "done."
 
-# create docker image
+echo -n "Creating docker image '$DOCKERIMAGE:$VERSION'..."
 docker build -t "$DOCKERIMAGE:$VERSION" "$BASEPATH"
-# upload docker image
+echo "done."
+echo -n "Pushing docker image to registry..."
 docker push "$DOCKERIMAGE:$VERSION"
+echo "done."
 
-# git tag version
+echo -n "Tagging last commit with '$GIT_TAG'..."
 git tag "$GIT_TAG"
-# git push
+echo "done."
+echo -n "Pushing current branch and tag..."
 git push
 git push origin "$GIT_TAG"
+echo "done."
