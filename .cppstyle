@@ -20,3 +20,8 @@ indent:
     class:
         access_modifier: 0
         default: 2
+comments:
+    class: # could also be: access_specifier, field, function, method, struct, variable
+        @brief: "^((?:.|\n){0,80})$" # or any other comment group starting with '@'
+        default: "^((?:.|\n)+)$" # comment group without '@'
+    parameter: "^((?:.|\n)+)$" # parent needs comment starting with '@param name' for each parameter

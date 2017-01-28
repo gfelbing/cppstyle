@@ -32,3 +32,4 @@ cppstyle is configured using a yaml file. By default, it uses the .cppstyle in y
 You can specify another path using the `--config` option.
 
 For a full example, see `.cppstyle` in this repository.
+Every configuration is optional, a missing configuration means no checks on it.

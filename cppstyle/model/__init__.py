@@ -7,8 +7,8 @@ from .function import Function
 from .issue import Issue
 from .method import Method
 from .node import Node
+from .parameter import Parameter
 from .position import Position
 from .scope import Scope
 from .struct import Struct
 from .variable import Variable
-

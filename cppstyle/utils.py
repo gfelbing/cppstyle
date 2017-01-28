@@ -44,3 +44,16 @@ def split(list, split_predicate, append_predicate=lambda x: True):
     if len(current) > 0:
         result.append(current)
     return result
+
+
+def findAny(predicate, list):
+    for e in list:
+        if predicate(e):
+            return e
+    return None
+
+
+def camel_case_2_snake_case(name):
+    import re
+    s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
+    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()

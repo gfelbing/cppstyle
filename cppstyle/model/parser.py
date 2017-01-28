@@ -36,6 +36,8 @@ def to_node(clang_node):
         return Scope(file, position, access, comments, children)
     elif kind == ci.CursorKind.STRUCT_DECL:
         return Struct(file, position, access, comments, clang_node.spelling, children)
+    elif kind == ci.CursorKind.PARM_DECL:
+        return Parameter(file, position, access, comments, clang_node.spelling, children)
     else:
         return Node(file, position, access, comments, children)
 
@@ -93,7 +95,7 @@ def to_comment(comment_lines):
     type = "default"
     firstline, *remaining = list(comment_lines)
     if firstline.startswith("@"):
-        matcher = re.match("(@\w+)(?:\w*)(.*)", comment_lines[0])
+        matcher = re.match("(@\w+)(?:\s*)(.*)", comment_lines[0])
         type = matcher.group(1)
         firstline = matcher.group(2)
     content = "\n".join([firstline] + remaining)
