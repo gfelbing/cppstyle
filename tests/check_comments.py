@@ -13,7 +13,7 @@ class TestComments(unittest.TestCase):
         # given
         config = {"comments": {"class": {
             "default": "^((?:.|\n)+)$",
-            "@brief": "^((?:.|\n){0,80})$"
+            "brief": "^((?:.|\n){0,80})$"
         }}}
 
         # when

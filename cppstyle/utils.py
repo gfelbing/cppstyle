@@ -12,14 +12,6 @@ def config(file):
         return y.safe_load(file)
 
 
-def printNode(node, indent):
-    out = "{} {}: {}".format((" " * indent), str(node.kind), node.spelling)
-    print(out)
-
-    for c in node.get_children():
-        printNode(c, indent + 2)
-
-
 def safe_get(dict, keys):
     result = dict
     for key in keys:
@@ -46,7 +38,7 @@ def split(list, split_predicate, append_predicate=lambda x: True):
     return result
 
 
-def findAny(predicate, list):
+def find_any(predicate, list):
     for e in list:
         if predicate(e):
             return e
@@ -57,3 +49,9 @@ def camel_case_2_snake_case(name):
     import re
     s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
     return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
+
+def splice(list):
+    if len(list) == 0:
+        return None, []
+    else:
+        return list[0], list[1:]

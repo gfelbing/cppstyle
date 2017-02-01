@@ -14,5 +14,5 @@ with open("VERSION.txt") as versionfile:
         packages=["cppstyle", "cppstyle.model"],
         scripts=['bin/cppstyle'],
         zip_safe=False,
-        install_requires=['argparse', 'pyyaml', 'enum']
+        install_requires=['argparse', 'pyyaml']
     )

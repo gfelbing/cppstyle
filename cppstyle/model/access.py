@@ -1,8 +1,8 @@
-from enum import Enum
+class Access(object):
+    def __init__(self, value):
+        self.value = value
 
-
-class Access(Enum):
-    PRIVATE = "private"
-    PROTECTED = "protected"
-    PUBLIC = "public"
-    NONE = "none"
+Access.PRIVATE = Access("private")
+Access.PROTECTED = Access("protected")
+Access.PUBLIC = Access("public")
+Access.NONE = Access("none")

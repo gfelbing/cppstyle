@@ -93,9 +93,9 @@ def get_comments(clang_node):
 
 def to_comment(comment_lines):
     type = "default"
-    firstline, *remaining = list(comment_lines)
+    firstline, remaining = utils.splice(list(comment_lines))
     if firstline.startswith("@"):
-        matcher = re.match("(@\w+)(?:\s*)(.*)", comment_lines[0])
+        matcher = re.match("(?:@)(\w+)(?:\s*)(.*)", comment_lines[0])
         type = matcher.group(1)
         firstline = matcher.group(2)
     content = "\n".join([firstline] + remaining)

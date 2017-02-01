@@ -30,10 +30,10 @@ def check(node, config):
     parameter_comment_config = utils.safe_get(config, ["comments", "parameter"])
     if parameter_comment_config:
         parameters = list(filter(lambda c: isinstance(c, Parameter), node.children))
-        comments = list(filter(lambda c: c.type == "@param", node.comments))
+        comments = list(filter(lambda c: c.type == "param", node.comments))
 
         missing = list(filter(
-            lambda p: not utils.findAny(
+            lambda p: not utils.find_any(
                 lambda c: re.match('^{} '.format(p.name), c.content), comments),
             parameters
         ))
