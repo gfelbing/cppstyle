@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import errno
 import sys
 
 from cppstyle import check, utils
@@ -10,6 +9,7 @@ if __name__ == "__main__":
     args = utils.args()
     config = utils.config(args.config)
 
+    success = True
     for file in args.files:
         root = parser.parse(file)
         issues = check.check(file, root, config)
@@ -17,4 +17,9 @@ if __name__ == "__main__":
             print("Found issues in file '{}':".format(file))
             for issue in issues:
                 print("    {}".format(issue))
-            sys.exit(errno.EFAULT)
+            success = False
+    if success:
+        print("No issues found.")
+        sys.exit(0)
+    else:
+        sys.exit(1)
