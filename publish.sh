@@ -17,9 +17,11 @@ echo "done."
 
 echo -n "Creating docker image '$DOCKERIMAGE:$VERSION'..."
 docker build -t "$DOCKERIMAGE:$VERSION" "$BASEPATH"
+docker tag "$DOCKERIMAGE:$VERSION" "$DOCKERIMAGE:latest"
 echo "done."
 echo -n "Pushing docker image to registry..."
 docker push "$DOCKERIMAGE:$VERSION"
+docker push "$DOCKERIMAGE:latest"
 echo "done."
 
 echo -n "Tagging last commit with '$GIT_TAG'..."
