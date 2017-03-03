@@ -2,6 +2,7 @@ from cppstyle.model import Access, Class, Field, Function, Issue, Method, Variab
 from .utils import safe_get
 
 
+
 def check(node, config):
     import re
     errors = []
@@ -30,13 +31,14 @@ def check(node, config):
                     "Function '{}' does not match '{}'".format(node.name, regex)
                 ))
     elif isinstance(node, Method):
-        regex = safe_get(config, ["naming", "methods"])
-        if regex:
-            if re.match(regex, node.name) == None:
-                errors.append(Issue(
-                    node.position,
-                    "Method '{}' does not match '{}'".format(node.name, regex)
-                ))
+        if not re.match("operator[\W\D\S]+",node.name):
+            regex = safe_get(config, ["naming", "methods"])
+            if regex:
+                if re.match(regex, node.name) == None:
+                    errors.append(Issue(
+                        node.position,
+                        "Method '{}' does not match '{}'".format(node.name, regex)
+                    ))
     elif isinstance(node, Field):
         name = node.name
         regex = ""

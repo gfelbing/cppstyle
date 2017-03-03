@@ -18,3 +18,7 @@ int main()
 
 void foo_function() {
 }
+
+class Bar {
+    operator [] ( int idx);
+}

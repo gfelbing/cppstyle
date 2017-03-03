@@ -65,9 +65,8 @@ class TestNaming(unittest.TestCase):
         # when
         result = check.check(self.file, self.source, config)
         # then
-        asserted = "[Line 8, Col 8]: Method 'foo_method' does not match '^([a-z0-9]+)([A-Z][a-z0-9]*)*$'"
-        self.assertEqual(len(result), 1)
-        self.assertEqual(str(result[0]), asserted)
+        asserted = ["[Line 8, Col 8]: Method 'foo_method' does not match '^([a-z0-9]+)([A-Z][a-z0-9]*)*$'"]
+        self.assertEqual([str(r) for r in result],asserted)
 
     def test_functions(self):
         # given
